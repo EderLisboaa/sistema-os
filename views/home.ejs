@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sistema OS</title>
+    <link rel="icon" href="./images/favicon.png" type="image/png" sizes="32x32"/>
+    <link rel="stylesheet" href="/assets/css/css/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    
+    
+    <script defer src="./../assets/scripts/script.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="/assets/scripts/js/jquery.dataTables.min.js"></script>
+    <script>$(document).ready(function() {
+        $('#example').DataTable({
+            "order": [[ 2, "desc" ]],
+            "language": {
+                "lengthMenu": "Exibir _MENU_ items por pagina",
+                "zeroRecords": "Nenhum registro encontrado",
+                "info": "Exibindo pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "No records available",
+                "infoFiltered": "(filtrado de _MAX_ items)"
+            },
+            "lengthMenu": [[25, 10, 50, -1], [25, 10, 50, "All"]]
+        });
+    } );</script>
+</head>
+<body>
+    <header>
+        <a href="estoque"><h1>Sistema OS</h1></a>
+        <a href="sair" class="sair">sair</a>
+    </header>
+    <section>
+        <form method="POST" class="cadastro">
+            <select name="produto" id="produto">
+                <option value="PRODUTO">PRODUTO</option>
+                <option value="TRC-388">TRC-388</option>
+                <option value="TRC-388b">TRC-388b</option>
+                <option value="TRC-389">TRC-389</option>
+                <option value="TRC-338">TRC-338</option>
+                <option value="TRC-339">TRC-339</option>
+                <option value="TRC-358">TRC-358</option>
+                <option value="TRC-359">TRC-359</option>
+                <option value="TRC-360">TRC-360</option>
+                <option value="TRC-362">TRC-362</option>
+                <option value="TRC-348">TRC-348</option>
+                <option value="TRC-328">TRC-328</option>
+                <option value="TRC-329">TRC-329</option>
+                <option value="TRC-368">TRC-368</option>
+                <option value="TRC-369">TRC-369</option>
+                <option value="TRC-515">TRC-515</option>
+                <option value="TRC-518">TRC-518</option>
+                <option value="TRC-513">TRC-513</option>
+                <option value="TRC-511">TRC-511</option>
+                <option value="TRC-213">TRC-213</option>
+                <option value="TRC-212">TRC-212</option>
+                <option value="TRC-211">TRC-211</option>
+                <option value="TRC-210">TRC-210</option>
+                <option value="TRC-218">TRC-218</option>
+                <option value="TRC-215">TRC-215</option>
+                <option value="NVS-3170">NVS-3170</option>
+                <option value="NVS-3079">NVS-3079</option>
+                <option value="NVS-3099">NVS-3099</option>
+                <option value="NVS-3066">NVS-3066</option>
+                <option value="NVS-3068">NVS-3068</option>
+                <option value="NVS-3018">NVS-3018</option>
+                <option value="NVS-3030">NVS-3030</option>
+                <option value="NVA-204">NVA-204</option>
+                <option value="NVA-216">NVA-216</option>
+            </select>
+            <input class="input_os" type="number" name="os" placeholder="Numero da OS">
+            <div class="container-check">
+                <label><input type="checkbox" class="check" id="Check1" name="correio" onclick="selectOnlyThis(this.id)" /> Correio</label>
+                <label><input type="checkbox" class="check" id="Check2" name="recepcao" onclick="selectOnlyThis(this.id)" /> Recepção</label>
+            </div>
+            <input class="input_conserto"type="text" name="conserto" placeholder="O que foi feito">
+            <label for=""><strong>Data</strong></label>
+            <input type="date" name="data" placeholder="data">
+            <button>ENVIAR</button>
+        </form>
+        
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th scope="col">Técnico</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">OS</th>
+                    <th scope="col" class="column3">Entrada</th>
+                    <th scope="col " class="column4">Solução</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let colunm = 0;
+                
+                for (let index in lista[1]){ var cod;%>
+                    <tr class="linha">
+                        <% for(let item of lista){
+                            if (colunm > 5){
+                                colunm = 0;
+                            }%>
+                            <td class="column<%=colunm%>">
+                                <%= item[index] %>               
+                            </td>
+                            <% cod = id[index]
+                        colunm++;}%>
+                            <td style=" background-color: red; height: 40px; width: 60px; padding: 0;">
+                                <a href="/delete/<%= cod %>"><div style="height: 40px;">X</div></a>
+                            </td>
+                        </tr> 
+                        <%} %>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="col">Técnico</th>
+                            <th scope="col">Produto</th>
+                            <th scope="col">OS</th>
+                            <th scope="col" class="column3">Entrada</th>
+                            <th scope="col" class="column4">Solução</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Excluir</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="maisInfo" style="display: none">
+                    <div class="headerInfo">
+                        <p>Ordem de Serviço: <strong>0000</strong> CORREIO</p>
+                        <p>Data de Entrada: <strong>01/01/2001</strong></p>
+                    </div>
+                    <div class="infoStatus">
+                        <h2><strong>Status</strong></h2>
+                        <select name="status" id="">
+                            <option value="CONSERTADO">CONSERTADO</option>
+                            <option value="AGUARDANDO">AGUARDANDO</option>
+                            <option value="EM CONSERTO">EM CONSERTO</option>
+                            <option value="CORREIO">CORREIO</option>
+                            <option value="RETIRADO">RETIRADO</option>
+                        </select> 
+                    </div>
+                    <div class="infoSection1">
+                        <div><strong>Produto:</strong></div>
+                        <div><strong>Defeito:</strong></div>
+                        <div><strong>Solução:</strong></div>
+                        <div><strong>Técnico:</strong></div>
+                    </div>
+                    <div class="infoSection2">
+                        <div><strong>Observações</strong></div>
+                        <textarea rows="4" cols="50" name="comment" form="usrform">
+                            Enter text here...</textarea>
+                    </div>
+                    <div>
+                        <p>Salvar</p>
+                        <p onclick="sair()">Sair</p>
+                    </div>
+                </div>
+            </section>       
+        </body>
+        </html>
