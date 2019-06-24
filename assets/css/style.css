@@ -1,0 +1,306 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 8pt;
+}
+
+#example_length select{
+    margin: 0px 10px;
+    padding: 0px;
+    height: 30px;
+    width: 70px;
+}
+#example_filter input{
+    padding: 0px;
+    height: 30px;
+    width: 150px;
+    
+}
+
+#example_filter, #example_length{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+img{
+    cursor: pointer;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 20px;
+    background-color: black;
+    
+}
+
+header>a{
+    color: red;
+    text-decoration: none;
+}
+
+header>.sair{
+    position: absolute;
+    right: 100px;
+    font-size: 12pt;
+}
+
+
+section form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+input {
+    width: 150px;
+    height: 20px;
+    margin: 2px;
+}
+
+select {
+    width: 154px;
+    height: 20px;
+}
+.container-check{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    display: flex;
+    align-items: center;
+    height: 25px;
+    margin: 0 20px;
+}
+
+.check{
+    height: 20px;
+    width: 15px;
+}
+
+button{
+    background-color: rgba(240, 248, 255, 0);
+    border: 1px solid lightgreen;
+    color: lightgreen;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    font-size: 10pt;
+    font-weight: bolder;
+}
+
+button img{
+    height: 20px;
+}
+
+.relatorio{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+table td{
+    border: 1px solid black;
+    padding: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 5pt;
+
+}
+
+section{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+input, select{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+}
+
+a>div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 60px;
+    color: white;
+    
+}
+a>div:hover{
+  background-color: rgb(153, 14, 14);
+  font-size: 15pt;
+}
+th{
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+section form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+table tr:hover{
+    background-color: lightgrey;
+}
+
+table td{
+    font-size: 8pt;
+    border: none;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+.column4, .column3{
+    display: none;
+}
+
+@media only screen and (min-width: 672px){
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    .column4, .column3{
+        display:table-cell;
+    }
+
+    input, select{
+        border: 1px solid black;
+        padding: 10px;
+        border-radius: 10px;
+        width: 200px;
+        height: 50px;
+    }
+
+    button{
+        background-color: rgba(240, 248, 255, 0);
+        border: 1px solid lightgreen;
+        padding: 10px;
+        border-radius: 10px;
+        width: 200px;
+        height: 50px;
+        font-size: 5pt;
+    }
+    
+
+    a>div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 60px;
+        color: white;
+        
+    }
+    a>div:hover{
+      background-color: rgb(153, 14, 14);
+      font-size: 15pt;
+    }
+    th{
+        background-color: black;
+        color: white;
+        padding: 10px;
+    }
+    section form{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    button:hover{
+        cursor: pointer;
+    }
+    
+    table tr:hover{
+        background-color: lightgrey;
+    }
+
+    table td{
+        font-size: 8pt;
+        border: none;
+    }
+
+    a{
+        text-decoration: none;
+        color: white;
+    }
+
+
+}
+
+.maisInfo{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    z-index: 5;
+    position: fixed;
+    top: 10%;
+    width:80%;
+    height: 70%;
+    background-color: white;
+    border: 2px solid rgb(153, 14, 14);
+    border-radius: 5%;
+}
+
+.headerInfo{
+    display: flex;
+    position: static;
+    border-bottom: 1px solid rgb(153, 14, 14);
+    width: 80%;
+    height: 15%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoSection1{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-self: flex-start;
+    margin-left: 11%;
+    height: 35%;
+}
+
+.infoSection2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* 
+.infoSection2>input{
+    height: 100px;
+} */
+.maisInfo>div:nth-child(5){
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+    /* background-color: blue; */
+}
+
+p{
+    cursor: pointer;
+}
