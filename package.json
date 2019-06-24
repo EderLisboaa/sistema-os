@@ -1,0 +1,26 @@
+{
+  "name": "sistema-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "\u001b[A\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[B\u001b[B\u001b[D\u001b[D\u001b[D"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "cookie-parser": "^1.4.3",
+    "datatables.net-dt": "^1.10.19",
+    "datatables.net-editor-server": "^1.8.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-mongo-db": "^2.0.4",
+    "is-null-or-empty": "0.0.1",
+    "mongodb": "^3.1.10",
+    "mssql": "^4.3.2"
+  }
+}
