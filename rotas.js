@@ -7,6 +7,8 @@ const pesquisar     = require ('./pesquisar');
 const ObjectID      = require ('mongodb').ObjectID;
 const sql           = require("mssql");
 
+const {User} = require('./models');
+
 
 // config for your database
 var config = {
@@ -61,9 +63,29 @@ let insertDelta =  function (tecnico, os, conserto, data){
 
 const router        = express.Router();
 
+
+// MIDDLEWARES
+
+let verify_login = function (req, res, next) {
+    
+    if (req.cookies.email === undefined && req.originalUrl != '/login') {
+        console.log(req.headers);
+        res.redirect('/login');
+
+    }
+    else {
+        next();
+    }
+
+}
+
+router.use(verify_login);
+
+
 //Funções GET **************************************************************************************
 router.get('/', function(req, res){
     res.redirect('login');
+    // res.redirect('home');
 });
 
 router.get('/adm', function(req, res){
@@ -81,17 +103,18 @@ router.get('/sair', function(req, res){
 
 router.get('/home', function(req, res) {
     
-    let nome = "ssdsad";
-    nome = req.cookies;
+    let cookies = req.cookies;
+
     
     //caso não esteja logado, ir para a tela de login
-    if(nome.nome === undefined){
+    if(cookies.email === undefined){
         res.redirect('login');
         return;
     }
-    
-    pesquisar(req, res, null, nome);
-    
+        
+    pesquisar(req, res, null, cookies.email);
+        
+    res.render('home');
 });
 
 router.get('/estoque', function(req, res){
@@ -129,39 +152,43 @@ router.get('/delete/:id', (req, res) => {
 });
 
 //Funções POST *********************************************************************************************
-router.post('/login', function(req, res){
+router.post('/login', async function(req, res){
     let travar;
     
-    res.cookie('nome', req.body.usuario.toUpperCase(), { expires: new Date(Date.now() + 1800000), httpOnly: true });
+    let {email, password} = req.body;
+
+    res.cookie('email', email.toUpperCase(), { expires: new Date(Date.now() + 1800000), httpOnly: true });
     
     //condição para trava o sistema
-    if(req.body.usuario.toLowerCase() === "travar"){
-        req.db.collection('travar').drop();
-        req.db.collection('travar').insert({travar: 1});
-    }
+    // if(req.body.usuario.toLowerCase() === "travar"){
+    //     req.db.collection('travar').drop();
+    //     req.db.collection('travar').insert({travar: 1});
+    // }
     
     //Verifica se o sistemas esta travado
-    req.db.collection('travar').find({}).toArray((erro, dados) =>{
-        for(let dado of dados){
-            travar = dado.travar;
+    // req.db.collection('travar').find({}).toArray((erro, dados) =>{
+    //     for(let dado of dados){
+    //         travar = dado.travar;
+    //     }
+
+    const user = await User.find({
+        where: {
+            email: email,
+            password: password
         }
-        
-        req.db.collection('usuarios').find({
-            nome:   req.body.usuario.toUpperCase(),
-            senha:  req.body.senha
-        }).toArray((erro, dados) => {
-            let nome = undefined;
-            
-            for(let dado of dados){
-                nome = dado.nome;
-            }
-            
-            if(nome !== undefined && travar == 0)
-            res.redirect('home');
-            else
-            res.render('login');
+    })
+
+
+    if(user == null) {
+        res.render('login', {
+            success: false,
+            message: 'Login ou senha inválido'
         })
-    });
+    }
+
+    res.redirect('home');
+
+    // });
 });
 
 router.post('/home', function(req, res){
@@ -206,7 +233,6 @@ router.post('/home', function(req, res){
     insertDelta(nome, os, conserto, dataDelta);
     res.redirect('home');      
 });
-
 
 router.post('/adm', function(req, res){
     let caixa       = req.body.caixa;

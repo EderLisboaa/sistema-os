@@ -7,7 +7,7 @@ const router        = require ('./rotas');
 const app = express();
 
 //middlewares utilizadas no sistema
-app.use (db("mongodb://localhost:27017/os"));           //endereço do banco
+// app.use (db("mongodb://localhost:27017/os"));           //endereço do banco
 app.use ('/assets', express.static('assets'));          //utilização de arquivos staticos
 app.use (bodyParser.urlencoded({extended: 'true'}));    //tipo de dado que recebemos do html
 app.use (cookieParser());                               //cookie, para armazenar dados dos usuarios
