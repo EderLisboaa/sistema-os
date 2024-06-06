@@ -23,7 +23,7 @@
     "express": "^4.19.2",
     "is-null-or-empty": "0.0.1",
     "mysql": "^2.18.1",
-    "mysql2": "^2.2.5"
+    "mysql2": "^3.9.8"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
