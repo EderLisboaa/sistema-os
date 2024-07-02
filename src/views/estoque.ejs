@@ -6,45 +6,56 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sistema OS</title>
     <link rel="icon" href="./images/favicon.png" type="image/png" sizes="32x32"/>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../assets/css/estoque.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script>$(document).ready(function() {
-        $('#example').DataTable();
+    <link href="https://unpkg.com/tabulator-tables@6.2.1/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.2.1/dist/js/tabulator.min.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function(e) {
+        var data = JSON.parse('<%- JSON.stringify(data) %>')
+
+        if(data.length === 0) {
+            var urlParams = new URLSearchParams(window.location.search);
+            var skip = urlParams.get('skip');
+            if(skip > 0) {
+                window.location = '/estoque?skip=' + (skip - 10)
+            }
+        } 
+
+        var tableData = data.map((item) => ({
+            caixa: item.slot,
+            produto: item.itemName,
+            quantidade: item.quantity
+        }))
+
+        var table = new Tabulator("#estoqueTable", {
+            columnDefaults: {
+                minWidth: 150, //maximum column width of 300px for all columns
+            },
+            data: tableData, //assign data to table
+            columns:[ //Define Table Columns
+                {title:"caixa", field:"caixa"},
+                {title:"produto", field:"produto"},
+                {title:"quantidade", field:"quantidade"},
+            ],
+            
+            pagination: true,
+            paginationButtonCount: 0,
+            paginationSize: 2,
+        });
+
+        table.on("pageLoaded", function(page){
+            window.location = '/estoque?skip=' + page * 10
+        });
     } );</script>
 
 </head>
 <body>
     <header>
-        <a href="./home.ejs"><h1>Estoque</h1></a>
+        <a href="./home"><h1>Estoque</h1></a>
     </header>
-<table id="example" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>CAIXA</th>
-                <th>PRODUTO</th>    
-                <th>DESCRIÇÃO</th>
-                <th>PREÇO</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (let index in lista[0]){%>
-                <tr>
-                    <%for (let dado of lista){%>
-                        <td><%= dado[index]%></td>
-                    <%}%>
-                </tr> 
-                    <%} %>
-                </tbody>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-            </tr>
-        </tfoot>
-    </table>
+    <section>
+        <div id="estoqueTable"></div>
+    </section>
     </body>
     </html>

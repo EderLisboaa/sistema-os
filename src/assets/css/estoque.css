@@ -20,10 +20,7 @@ header>a{
     text-decoration: none;
 }
 
-table td{
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    font-size: 10pt;
-
+section {
+    display: flex;
+    justify-content: center;
 }

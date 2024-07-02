@@ -83,7 +83,7 @@ label{
     width: 15px;
 }
 
-button{
+.customButton{
     background-color: rgba(240, 248, 255, 0);
     border: 1px solid lightgreen;
     color: lightgreen;
@@ -95,7 +95,7 @@ button{
     font-weight: bolder;
 }
 
-button img{
+.customButton img{
     height: 20px;
 }
 
@@ -103,15 +103,6 @@ button img{
     display: flex;
     justify-content: center;
     margin: 20px 0px;
-}
-
-table td{
-    border: 1px solid black;
-    padding: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    font-size: 5pt;
-
 }
 
 section{
@@ -145,28 +136,15 @@ a>div:hover{
   background-color: rgb(153, 14, 14);
   font-size: 15pt;
 }
-th{
-    background-color: black;
-    color: white;
-    padding: 10px;
-}
+
 section form{
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-button:hover{
+.customButton:hover{
     cursor: pointer;
-}
-
-table tr:hover{
-    background-color: lightgrey;
-}
-
-table td{
-    font-size: 8pt;
-    border: none;
 }
 
 a{
@@ -195,14 +173,13 @@ a{
         height: 50px;
     }
 
-    button{
+    .customButton {
         background-color: rgba(240, 248, 255, 0);
         border: 1px solid lightgreen;
         padding: 10px;
         border-radius: 10px;
         width: 200px;
         height: 50px;
-        font-size: 5pt;
     }
     
 

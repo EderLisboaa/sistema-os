@@ -9,24 +9,53 @@
     <link rel="stylesheet" href="/assets/css/css/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/css/style.css">
-    
+    <link href="https://unpkg.com/tabulator-tables@6.2.1/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.2.1/dist/js/tabulator.min.js"></script>
     
     
     <script defer src="./../assets/scripts/script.js"></script>
     
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="/assets/scripts/js/jquery.dataTables.min.js"></script>
-    <script>$(document).ready(function() {
-        $('#example').DataTable({
-            "order": [[ 2, "desc" ]],
-            "language": {
-                "lengthMenu": "Exibir _MENU_ items por pagina",
-                "zeroRecords": "Nenhum registro encontrado",
-                "info": "Exibindo pagina _PAGE_ de _PAGES_",
-                "infoEmpty": "No records available",
-                "infoFiltered": "(filtrado de _MAX_ items)"
+    <script>
+    document.addEventListener("DOMContentLoaded", function(e) {
+        var list = JSON.parse('<%- JSON.stringify(lista) %>')
+
+        if(list.length === 0) {
+            var urlParams = new URLSearchParams(window.location.search);
+            var skip = urlParams.get('skip');
+            if(skip > 0) {
+                window.location = '/home?skip=' + (skip - 10)
+            }
+        } 
+
+        var tableData = list.map((item) => ({
+            userId: item.userId,
+            productName: item.productName,
+            serviceId: item.id,
+            inputDate: item.createdAt,
+            status: null
+        }))
+
+        var table = new Tabulator("#servicesTable", {
+            height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+            columnDefaults:{
+                minWidth: 150, //maximum column width of 300px for all columns
             },
-            "lengthMenu": [[25, 10, 50, -1], [25, 10, 50, "All"]]
+            data: tableData, //assign data to table
+            columns:[ //Define Table Columns
+                {title:"Técnico", field:"userId"},
+                {title:"Produto", field:"productName"},
+                {title:"OS", field:"serviceId"},
+                {title:"Data de entrada", field:"inputDate"},
+                {title:"Status", field:"status"},
+            ],
+            
+            pagination: true,
+            paginationButtonCount: 0,
+            paginationSize: 2,
+        });
+
+        table.on("pageLoaded", function(page){
+            window.location = '/home?skip=' + page * 10
         });
     } );</script>
 </head>
@@ -37,8 +66,8 @@
     </header>
     <section>
         <form method="POST" action="/createorder" class="cadastro">
-            <select name="produto" id="produto">
-                <option value="PRODUTO">PRODUTO</option>
+            <select name="produto" id="produto" required>
+                <option value="" disabled selected>PRODUTO</option>
                 <option value="TRC-388">TRC-388</option>
                 <option value="TRC-388b">TRC-388b</option>
                 <option value="TRC-389">TRC-389</option>
@@ -73,18 +102,17 @@
                 <option value="NVA-204">NVA-204</option>
                 <option value="NVA-216">NVA-216</option>
             </select>
-            <input class="input_os" type="number" name="os" placeholder="Numero da OS">
+            <input class="input_os" type="number" name="os" placeholder="Numero da OS" required>
             <div class="container-check">
-                <label><input type="checkbox" class="check" id="Check1" name="correio" onclick="selectOnlyThis(this.id)" /> Correio</label>
-                <label><input type="checkbox" class="check" id="Check2" name="recepcao" onclick="selectOnlyThis(this.id)" /> Recepção</label>
+                <label><input type="radio" class="check" id="Check1" name="inputType" value="Correio" required/> Correio</label>
+                <label><input type="radio" class="check" id="Check2" name="inputType" value="Recepção" required/> Recepção</label>
             </div>
-            <input class="input_conserto"type="text" name="conserto" placeholder="O que foi feito">
-            <label for=""><strong>Data</strong></label>
-            <input type="date" name="data" placeholder="data">
-            <button>ENVIAR</button>
+            <button class="customButton">ENVIAR</button>
         </form>
+
+        <div id="servicesTable"></div>
         
-        <table id="example" class="display" style="width:100%">
+        <!-- <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th scope="col">Técnico</th>
@@ -97,9 +125,11 @@
             <tbody> 
                 <% for (let index of lista){%>
                     <tr>
-                        <%for (let dado in index){%>
-                            <td><%= index[dado]%></td>
-                        <%}%>
+                        <td><%= index['userId']%></td>
+                        <td><%= index['productName']%></td>
+                        <td><%= index['id']%></td>
+                        <td><%= index['createdAt'].toISOString()%></td>
+                        <td>teste</td>
                     </tr> 
                         <%} %>
             </tbody>
@@ -112,7 +142,7 @@
                             <th scope="col" class="column4">Status</th>
                         </tr>
                     </tfoot>
-                </table>
+        </table> -->
                 <div class="maisInfo" style="display: none">
                     <div class="headerInfo">
                         <p>Ordem de Serviço: <strong>0000</strong> CORREIO</p>
