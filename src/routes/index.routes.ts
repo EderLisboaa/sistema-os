@@ -3,57 +3,18 @@ import { loginService } from '../services/login.service';
 import { find as findOs } from '../services/find.service';
 import { UserService } from '../modules/users/user.service';
 import { UserDatabase } from '../modules/users/user.database';
-// const exibirEstoque     = require ('./exibirEstoque');
-
-
-// connect to your database
-// let insertDelta =  function (tecnico: string, os: number, conserto: string, data: string){
-    
-//     let posicao;
-    
-    
-//     // sql.connect(config, function (err) {
-        
-//     //     if (err) console.log(err);
-        
-//     //     // create Request object
-//     //     var request = new sql.Request();
-        
-//     //     request.query(`select posicao from ITEMAT WHERE cod_assistencia = ${os} `, function (err, recordset) {
-            
-//     //         if (err) console.log(err)
-            
-//     //         // send records as a response
-//     //         posicao = recordset.recordsets[0][0].posicao;
-            
-//     //         if (posicao === "EM CONSERTO"){
-//     //             posicao = "CONSERTADO";
-//     //         } 
-            
-            
-//     //         // query to the database and get the records
-//     //         request.query(`UPDATE ITEMAT SET 
-//     //         desc_problema2='LAB: ${conserto}',
-//     //         posicao = '${posicao}', 
-//     //         tecnico = '${tecnico}', 
-//     //         dt_conserto = '${data}' 
-//     //         WHERE cod_assistencia= ${os}`, function (err, recordset) {
-                
-//     //             if (err) console.log(err+"deu erro aqui");
-                
-//     //             sql.close();
-//     //         });
-//     //     });
-//     // });
-    
-    
-// }
+import swaggerUi from 'swagger-ui-express';
 
 let userDatabase = new UserDatabase()
 
 let userService = new UserService();
 
 const router = Router();
+
+const swaggerDocument = require('../../swagger-output.json');
+
+router.use('/api-docs', swaggerUi.serve);
+router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 
 // MIDDLEWARES
