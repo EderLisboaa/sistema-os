@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from 'cookie-parser';
 import { router } from './src/routes/index.routes';
+import { initDb } from "./src/database/mysql";
 
 const app = express();
 const port = 3000;
@@ -14,6 +15,7 @@ app.use('/', router);
 app.set('view engine','ejs');
 app.set('views', './src/views')
 
-app.listen(port, ()=>{
-    console.log (`Server is runnin in localhost:${port}`);
+app.listen(port, async () => {
+    await initDb();
+    console.log (`Server is running in localhost:${port}`);
 }); 
