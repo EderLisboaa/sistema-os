@@ -16,10 +16,12 @@ export class UserService {
         const user = await findUserSQL({ email, password });
 
         if(!user) {
-            response.render('login', {
-                success: false,
-                message: 'Login ou senha inválido'
-            })
+            // response.render('login', {
+            //     success: false,
+            //     message: 'Login ou senha inválido'
+            // })
+            response.status(401)
+            response.send("Unauthorized")
             return;
         }
 
@@ -28,6 +30,9 @@ export class UserService {
         response.cookie('userName', user.name, { expires: new Date(Date.now() + 1800000), httpOnly: true });
         response.cookie('userRole', user.role, { expires: new Date(Date.now() + 1800000), httpOnly: true });
 
-        response.redirect('home');
+        // response.redirect('home');
+        response.status(200)
+        response.send()
+        return;
     }
 }

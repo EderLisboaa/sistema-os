@@ -24,7 +24,9 @@ router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 // MIDDLEWARES
 let verify_login = function (req: Request, res: Response, next: Next) {
     if (req.cookies.userEmail == undefined && req.path !== '/login') {
-        res.redirect('/login');
+        // res.redirect('/login');
+        res.status(401)
+        res.send("Unauthorized")
     }
     else {
         next();
@@ -34,14 +36,9 @@ let verify_login = function (req: Request, res: Response, next: Next) {
 
 router.use(verify_login);
 
-router.get('/', function(req, res){
-    res.redirect('/home')
-});
-
-router.get('/login', function(req, res){
-    res.render('login');
-});
-
+// router.get('/', function(req, res){
+//     res.redirect('/home')
+// });
 
 router.post('/login', userService.login.bind(userService));
 
@@ -49,63 +46,71 @@ router.get('/admin', function(req, res){
     res.render('admin');
 });
 
-router.get('/sair', function(req, res){
-    res.clearCookie('nome');
-    res.redirect('login');
+router.post('/logout', function(req, res){
+    res.clearCookie('userId');
+    res.clearCookie('userEmail');
+    res.clearCookie('userName');
+    res.clearCookie('userRole');
+    res.status(204);
+    res.send();
+    return;
+
 })
 
-router.get('/home', async (req, res) => {
-    res.render('home', {
-        lista: await findServicesSQL({
-            take: req.query.take ? parseInt(req.query.take as string) : 20,
-            skip: req.query.skip ? parseInt(req.query.skip as string) : 0
-        })
-    });
+router.get('/services', async (req, res) => {
+    // res.render('home', {
+    //     lista: await findServicesSQL({
+    //         take: req.query.take ? parseInt(req.query.take as string) : 20,
+    //         skip: req.query.skip ? parseInt(req.query.skip as string) : 0
+    //     })
+    // });
 
+
+    const services = await findServicesSQL({
+                take: req.query.take ? parseInt(req.query.take as string) : 20,
+                skip: req.query.skip ? parseInt(req.query.skip as string) : 0
+            })
+    
+    res.send(services);
+    return;
 });
 
-router.get('/estoque', async (req, res) => {
-    
+router.get('/stock', async (req, res) => {
     const data = await findStockSQL()
 
-    console.log('data =>', data)
-
-    res.render('estoque', {
-        data: data,
-    });
+    res.send(data)
+    // res.render('estoque', {
+    //     data: data,
+    // });
 });
 
 router.delete('/:id', (req, res) => {
 });
 
 router.post('/createorder', async (req, res) => {
-    
-    console.log('req.body', req.body)
-
-    await createServiceSQL({
+    const orderId = await createServiceSQL({
         productName: req.body.produto,
         userId: req.cookies.userId,
         inputType: req.body.inputType
     })
+
+    res.send({ orderId })
     
-    // insertDelta(nome, os, conserto, dataDelta);
-    res.redirect('home');      
+    // res.redirect('home');      
 });
 
-router.post('/admin', async (req, res) => {  
-    console.log('req.body', req.body)
-
+router.post('/stock', async (req, res) => {  
     const itemId = await upsertStockSQL({
-        slot: req.body.caixa,
-        item_name: req.body.produto,
-        quantity: req.body.quantidade,
+        slot: req.body.slot,
+        item_name: req.body.itemName,
+        quantity: req.body.itemQuantity,
     })
 
-    console.log('itemId', itemId)
-    
-    res.render('admin', {
-        itemId
-    });
+    res.send({ itemId })
+    return;
+    // res.render('admin', {
+    //     itemId
+    // });
 });
 
 
