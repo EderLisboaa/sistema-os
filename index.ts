@@ -2,6 +2,8 @@ import express from "express";
 import cookieParser from 'cookie-parser';
 import { router } from './src/routes/index.routes';
 import { initDb } from "./src/database/mysql";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const port = 3000;

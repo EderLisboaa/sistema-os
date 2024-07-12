@@ -17,6 +17,7 @@
     "cookie-parser": "^1.4.3",
     "datatables.net-dt": "^1.13.11",
     "datatables.net-editor-server": "^2.0.2",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "is-null-or-empty": "0.0.1",
