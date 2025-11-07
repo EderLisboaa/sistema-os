@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.find = void 0;
+exports.find = find;
 function find(req, res) {
     if (!req.params.id) {
         res.render('home', {
@@ -30,4 +30,3 @@ function find(req, res) {
         });
     }
 }
-exports.find = find;

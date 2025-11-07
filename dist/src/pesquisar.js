@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pesquisar = void 0;
+exports.pesquisar = pesquisar;
 function pesquisar(req, res) {
     var nome = req.body.user;
     if (req.body.dado === null) {
@@ -73,7 +73,6 @@ function pesquisar(req, res) {
         // })
     }
 }
-exports.pesquisar = pesquisar;
 function exibirEstoque(req, res) {
     // req.db.collection('estoque').find({}).toArray((erro,dados)=>{
     //     let caixa = [];

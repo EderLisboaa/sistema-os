@@ -35,7 +35,7 @@ var user_database_1 = require("../modules/users/user.database");
 // }
 var userDatabase = new user_database_1.UserDatabase();
 var userService = new user_service_1.UserService();
-var router = express_1.Router();
+var router = (0, express_1.Router)();
 exports.router = router;
 // MIDDLEWARES
 var verify_login = function (req, res, next) {
@@ -53,7 +53,7 @@ router.get('/', function (req, res) {
 router.get('/login', function (req, res) {
     res.render('login');
 });
-router.post('/login', userService.login);
+router.post('/login', userService.login.bind(userService));
 router.get('/adm', function (req, res) {
     res.render('adm');
 });
@@ -102,8 +102,8 @@ router.post('/createorder', function (req, res) {
     var entrada = CorreioRecepcao;
     var conserto = req.body.conserto.toUpperCase();
     var data = req.body.data.split('-');
-    var dataDelta = (data[0] + "-" + data[1] + "-" + data[2]);
-    var databr = (data[2] + "/" + data[1] + "/" + data[0]);
+    var dataDelta = ("".concat(data[0], "-").concat(data[1], "-").concat(data[2]));
+    var databr = ("".concat(data[2], "/").concat(data[1], "/").concat(data[0]));
     if (nome === undefined || nome === "" || nome === null) {
         res.redirect('/');
         return;
