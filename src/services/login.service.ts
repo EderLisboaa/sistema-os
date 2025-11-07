@@ -7,7 +7,9 @@ export async function loginService (req: Request, res: Response) {
 
     res.cookie('email', email.toUpperCase(), { expires: new Date(Date.now() + 1800000), httpOnly: true });
 
-    const userData = await user.login();
+    const userData = await user.login(req, res);
+
+    console.log('userData:', userData);
 
     if(!user) {
         res.render('login', {

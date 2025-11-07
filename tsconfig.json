@@ -72,10 +72,6 @@
   "exclude": [
     "**/*.js",
     "**/node_modules",
-    "src/web/public/*",
-    "src/web/build/*",
-    "src/web/node_modules/*",
     "**.d.ts",
-    "src/web/config/**/*.js"
-  ]
+  ],
 }
