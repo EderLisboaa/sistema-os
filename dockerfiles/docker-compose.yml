@@ -8,6 +8,8 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
     ports:
       - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p1234"]
       interval: 5s
@@ -26,3 +28,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+volumes:
+  db-data:
